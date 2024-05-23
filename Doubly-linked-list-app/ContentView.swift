@@ -18,10 +18,10 @@ class Node {
     }
 }
 
-class DoublyLinkedList {
-    var count: Int = 0
-    var front: Node?
-    var end: Node?
+class DoublyLinkedList: ObservableObject {
+    @Published var count: Int = 0
+    @Published var front: Node?
+    @Published var end: Node?
         
     func search(_ item: Int) -> Node? {
         var temp = front
@@ -158,15 +158,112 @@ class DoublyLinkedList {
     }
 }
 
+class ListViewModel: ObservableObject {
+    @Published var lists: [DoublyLinkedList] = []
+    
+    func createNewList(with value: Int) {
+        let newList = DoublyLinkedList()
+        newList.insertAtBeginning(value)
+        lists.append(newList)
+    }
+    
+    func addNumberToList(at index: Int, value: Int) {
+        guard index < lists.count else { return }
+        lists[index].insertAtEnd(value)
+    }
+}
+
 struct ContentView: View {
+    @StateObject private var viewModel = ListViewModel()
+    @State private var selection: String? = "Home"
+    
+    var body: some View {
+        NavigationStack {
+            NavigationSplitView {
+                List(selection: $selection) {
+                    NavigationLink(value: "Home") {
+                        Label("Home", systemImage: "house")
+                    }
+                    NavigationLink(value: "List") {
+                        Label("List", systemImage: "star")
+                    }
+                    NavigationLink(value: "Item") {
+                        Label("Item", systemImage: "bell")
+                    }
+                }
+                .listStyle(SidebarListStyle())
+                .navigationTitle("Sidebar")
+            } detail: {
+                if let selection = selection {
+                    if selection == "Home" {
+                        HomeView(viewModel: viewModel)
+                    } else if selection == "List" {
+                        ListView(viewModel: viewModel)
+                    } else {
+                        Text(selection)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                } else {
+                    Text("Select an item")
+                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+                }
+            }
+        }
+    }
+}
+
+struct HomeView: View {
+    @ObservedObject var viewModel: ListViewModel
+    @State private var showAlert = false
+    @State private var newListValue = ""
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("Home")
+                .font(.largeTitle)
+            
+            if viewModel.lists.isEmpty {
+                Text("No lists available")
+            }
+            
+            Button(action: {showAlert = true}) {
+                Text("Create New List")
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+            .alert("Create New List", isPresented: $showAlert) {
+                TextField("Enter initial value", text: $newListValue)
+                Button("Create", action: {
+                    if let value = Int(newListValue) {
+                        viewModel.createNewList(with: value)
+                    }
+                })
+                Button("Cancel", role: .cancel, action: {})
+            }
         }
-        .padding()
+        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+    }
+}
+
+struct ListView: View {
+    @ObservedObject var viewModel: ListViewModel
+    
+    var body: some View {
+        VStack {
+            Text("Lists")
+                .font(.largeTitle)
+            
+            List {
+                ForEach(0..<viewModel.lists.count, id: \.self) {
+                    index in
+                    
+                    Text("List \(index + 1): \(viewModel.lists[index].front?.info ?? 0)")
+                }
+            }
+        }
+        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
     }
 }
 
