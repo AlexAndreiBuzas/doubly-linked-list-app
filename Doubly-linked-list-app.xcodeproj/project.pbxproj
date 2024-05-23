@@ -1,0 +1,578 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD89A2502BFF722A00A55CFE /* Doubly_linked_list_appApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89A24F2BFF722A00A55CFE /* Doubly_linked_list_appApp.swift */; };
+		AD89A2522BFF722A00A55CFE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89A2512BFF722A00A55CFE /* ContentView.swift */; };
+		AD89A2542BFF722A00A55CFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD89A2532BFF722A00A55CFE /* Assets.xcassets */; };
+		AD89A2572BFF722A00A55CFE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD89A2562BFF722A00A55CFE /* Preview Assets.xcassets */; };
+		AD89A2622BFF722A00A55CFE /* Doubly_linked_list_appTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89A2612BFF722A00A55CFE /* Doubly_linked_list_appTests.swift */; };
+		AD89A26C2BFF722B00A55CFE /* Doubly_linked_list_appUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89A26B2BFF722B00A55CFE /* Doubly_linked_list_appUITests.swift */; };
+		AD89A26E2BFF722B00A55CFE /* Doubly_linked_list_appUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89A26D2BFF722B00A55CFE /* Doubly_linked_list_appUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AD89A25E2BFF722A00A55CFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD89A2442BFF722900A55CFE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD89A24B2BFF722A00A55CFE;
+			remoteInfo = "Doubly-linked-list-app";
+		};
+		AD89A2682BFF722B00A55CFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD89A2442BFF722900A55CFE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD89A24B2BFF722A00A55CFE;
+			remoteInfo = "Doubly-linked-list-app";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AD89A24C2BFF722A00A55CFE /* Doubly-linked-list-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Doubly-linked-list-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD89A24F2BFF722A00A55CFE /* Doubly_linked_list_appApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doubly_linked_list_appApp.swift; sourceTree = "<group>"; };
+		AD89A2512BFF722A00A55CFE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AD89A2532BFF722A00A55CFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AD89A2562BFF722A00A55CFE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		AD89A2582BFF722A00A55CFE /* Doubly_linked_list_app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Doubly_linked_list_app.entitlements; sourceTree = "<group>"; };
+		AD89A25D2BFF722A00A55CFE /* Doubly-linked-list-appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Doubly-linked-list-appTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD89A2612BFF722A00A55CFE /* Doubly_linked_list_appTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doubly_linked_list_appTests.swift; sourceTree = "<group>"; };
+		AD89A2672BFF722B00A55CFE /* Doubly-linked-list-appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Doubly-linked-list-appUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD89A26B2BFF722B00A55CFE /* Doubly_linked_list_appUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doubly_linked_list_appUITests.swift; sourceTree = "<group>"; };
+		AD89A26D2BFF722B00A55CFE /* Doubly_linked_list_appUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doubly_linked_list_appUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD89A2492BFF722A00A55CFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD89A25A2BFF722A00A55CFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD89A2642BFF722B00A55CFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD89A2432BFF722900A55CFE = {
+			isa = PBXGroup;
+			children = (
+				AD89A24E2BFF722A00A55CFE /* Doubly-linked-list-app */,
+				AD89A2602BFF722A00A55CFE /* Doubly-linked-list-appTests */,
+				AD89A26A2BFF722B00A55CFE /* Doubly-linked-list-appUITests */,
+				AD89A24D2BFF722A00A55CFE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD89A24D2BFF722A00A55CFE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD89A24C2BFF722A00A55CFE /* Doubly-linked-list-app.app */,
+				AD89A25D2BFF722A00A55CFE /* Doubly-linked-list-appTests.xctest */,
+				AD89A2672BFF722B00A55CFE /* Doubly-linked-list-appUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD89A24E2BFF722A00A55CFE /* Doubly-linked-list-app */ = {
+			isa = PBXGroup;
+			children = (
+				AD89A24F2BFF722A00A55CFE /* Doubly_linked_list_appApp.swift */,
+				AD89A2512BFF722A00A55CFE /* ContentView.swift */,
+				AD89A2532BFF722A00A55CFE /* Assets.xcassets */,
+				AD89A2582BFF722A00A55CFE /* Doubly_linked_list_app.entitlements */,
+				AD89A2552BFF722A00A55CFE /* Preview Content */,
+			);
+			path = "Doubly-linked-list-app";
+			sourceTree = "<group>";
+		};
+		AD89A2552BFF722A00A55CFE /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				AD89A2562BFF722A00A55CFE /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		AD89A2602BFF722A00A55CFE /* Doubly-linked-list-appTests */ = {
+			isa = PBXGroup;
+			children = (
+				AD89A2612BFF722A00A55CFE /* Doubly_linked_list_appTests.swift */,
+			);
+			path = "Doubly-linked-list-appTests";
+			sourceTree = "<group>";
+		};
+		AD89A26A2BFF722B00A55CFE /* Doubly-linked-list-appUITests */ = {
+			isa = PBXGroup;
+			children = (
+				AD89A26B2BFF722B00A55CFE /* Doubly_linked_list_appUITests.swift */,
+				AD89A26D2BFF722B00A55CFE /* Doubly_linked_list_appUITestsLaunchTests.swift */,
+			);
+			path = "Doubly-linked-list-appUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD89A24B2BFF722A00A55CFE /* Doubly-linked-list-app */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD89A2712BFF722B00A55CFE /* Build configuration list for PBXNativeTarget "Doubly-linked-list-app" */;
+			buildPhases = (
+				AD89A2482BFF722A00A55CFE /* Sources */,
+				AD89A2492BFF722A00A55CFE /* Frameworks */,
+				AD89A24A2BFF722A00A55CFE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Doubly-linked-list-app";
+			productName = "Doubly-linked-list-app";
+			productReference = AD89A24C2BFF722A00A55CFE /* Doubly-linked-list-app.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AD89A25C2BFF722A00A55CFE /* Doubly-linked-list-appTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD89A2742BFF722B00A55CFE /* Build configuration list for PBXNativeTarget "Doubly-linked-list-appTests" */;
+			buildPhases = (
+				AD89A2592BFF722A00A55CFE /* Sources */,
+				AD89A25A2BFF722A00A55CFE /* Frameworks */,
+				AD89A25B2BFF722A00A55CFE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD89A25F2BFF722A00A55CFE /* PBXTargetDependency */,
+			);
+			name = "Doubly-linked-list-appTests";
+			productName = "Doubly-linked-list-appTests";
+			productReference = AD89A25D2BFF722A00A55CFE /* Doubly-linked-list-appTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AD89A2662BFF722B00A55CFE /* Doubly-linked-list-appUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD89A2772BFF722B00A55CFE /* Build configuration list for PBXNativeTarget "Doubly-linked-list-appUITests" */;
+			buildPhases = (
+				AD89A2632BFF722B00A55CFE /* Sources */,
+				AD89A2642BFF722B00A55CFE /* Frameworks */,
+				AD89A2652BFF722B00A55CFE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD89A2692BFF722B00A55CFE /* PBXTargetDependency */,
+			);
+			name = "Doubly-linked-list-appUITests";
+			productName = "Doubly-linked-list-appUITests";
+			productReference = AD89A2672BFF722B00A55CFE /* Doubly-linked-list-appUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD89A2442BFF722900A55CFE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					AD89A24B2BFF722A00A55CFE = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					AD89A25C2BFF722A00A55CFE = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = AD89A24B2BFF722A00A55CFE;
+					};
+					AD89A2662BFF722B00A55CFE = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = AD89A24B2BFF722A00A55CFE;
+					};
+				};
+			};
+			buildConfigurationList = AD89A2472BFF722900A55CFE /* Build configuration list for PBXProject "Doubly-linked-list-app" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AD89A2432BFF722900A55CFE;
+			productRefGroup = AD89A24D2BFF722A00A55CFE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD89A24B2BFF722A00A55CFE /* Doubly-linked-list-app */,
+				AD89A25C2BFF722A00A55CFE /* Doubly-linked-list-appTests */,
+				AD89A2662BFF722B00A55CFE /* Doubly-linked-list-appUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AD89A24A2BFF722A00A55CFE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD89A2572BFF722A00A55CFE /* Preview Assets.xcassets in Resources */,
+				AD89A2542BFF722A00A55CFE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD89A25B2BFF722A00A55CFE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD89A2652BFF722B00A55CFE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD89A2482BFF722A00A55CFE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD89A2522BFF722A00A55CFE /* ContentView.swift in Sources */,
+				AD89A2502BFF722A00A55CFE /* Doubly_linked_list_appApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD89A2592BFF722A00A55CFE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD89A2622BFF722A00A55CFE /* Doubly_linked_list_appTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD89A2632BFF722B00A55CFE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD89A26E2BFF722B00A55CFE /* Doubly_linked_list_appUITestsLaunchTests.swift in Sources */,
+				AD89A26C2BFF722B00A55CFE /* Doubly_linked_list_appUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AD89A25F2BFF722A00A55CFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD89A24B2BFF722A00A55CFE /* Doubly-linked-list-app */;
+			targetProxy = AD89A25E2BFF722A00A55CFE /* PBXContainerItemProxy */;
+		};
+		AD89A2692BFF722B00A55CFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD89A24B2BFF722A00A55CFE /* Doubly-linked-list-app */;
+			targetProxy = AD89A2682BFF722B00A55CFE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AD89A26F2BFF722B00A55CFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AD89A2702BFF722B00A55CFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		AD89A2722BFF722B00A55CFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Doubly-linked-list-app/Doubly_linked_list_app.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Doubly-linked-list-app/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Aplicate.Doubly-linked-list-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		AD89A2732BFF722B00A55CFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Doubly-linked-list-app/Doubly_linked_list_app.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Doubly-linked-list-app/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Aplicate.Doubly-linked-list-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		AD89A2752BFF722B00A55CFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Aplicate.Doubly-linked-list-appTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Doubly-linked-list-app.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Doubly-linked-list-app";
+			};
+			name = Debug;
+		};
+		AD89A2762BFF722B00A55CFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Aplicate.Doubly-linked-list-appTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Doubly-linked-list-app.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Doubly-linked-list-app";
+			};
+			name = Release;
+		};
+		AD89A2782BFF722B00A55CFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Aplicate.Doubly-linked-list-appUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Doubly-linked-list-app";
+			};
+			name = Debug;
+		};
+		AD89A2792BFF722B00A55CFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Aplicate.Doubly-linked-list-appUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Doubly-linked-list-app";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD89A2472BFF722900A55CFE /* Build configuration list for PBXProject "Doubly-linked-list-app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD89A26F2BFF722B00A55CFE /* Debug */,
+				AD89A2702BFF722B00A55CFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD89A2712BFF722B00A55CFE /* Build configuration list for PBXNativeTarget "Doubly-linked-list-app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD89A2722BFF722B00A55CFE /* Debug */,
+				AD89A2732BFF722B00A55CFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD89A2742BFF722B00A55CFE /* Build configuration list for PBXNativeTarget "Doubly-linked-list-appTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD89A2752BFF722B00A55CFE /* Debug */,
+				AD89A2762BFF722B00A55CFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD89A2772BFF722B00A55CFE /* Build configuration list for PBXNativeTarget "Doubly-linked-list-appUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD89A2782BFF722B00A55CFE /* Debug */,
+				AD89A2792BFF722B00A55CFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD89A2442BFF722900A55CFE /* Project object */;
+}
