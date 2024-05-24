@@ -159,17 +159,22 @@ class DoublyLinkedList: ObservableObject {
 }
 
 class ListViewModel: ObservableObject {
-    @Published var lists: [DoublyLinkedList] = []
+    struct NamedList {
+        var name: String
+        var list: DoublyLinkedList
+    }
     
-    func createNewList(with value: Int) {
+    @Published var namedLists: [NamedList] = []
+    
+    func createNewList(with value: Int, name: String) {
         let newList = DoublyLinkedList()
         newList.insertAtBeginning(value)
-        lists.append(newList)
+        namedLists.append(NamedList(name: name, list: newList))
     }
     
     func addNumberToList(at index: Int, value: Int) {
-        guard index < lists.count else { return }
-        lists[index].insertAtEnd(value)
+        guard index < namedLists.count else { return }
+        namedLists[index].list.insertAtEnd(value)
     }
 }
 
@@ -184,8 +189,10 @@ struct ContentView: View {
                     NavigationLink(value: "Home") {
                         Label("Home", systemImage: "house")
                     }
-                    NavigationLink(value: "List") {
-                        Label("List", systemImage: "star")
+                    if !viewModel.namedLists.isEmpty {
+                        NavigationLink(value: "List") {
+                            Label("List", systemImage: "star")
+                        }
                     }
                     NavigationLink(value: "Item") {
                         Label("Item", systemImage: "bell")
@@ -198,14 +205,16 @@ struct ContentView: View {
                     if selection == "Home" {
                         HomeView(viewModel: viewModel)
                     } else if selection == "List" {
-                        ListView(viewModel: viewModel)
+                        if !viewModel.namedLists.isEmpty {
+                            ListView(viewModel: viewModel, listIndex: 0)
+                        }
                     } else {
                         Text(selection)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 } else {
                     Text("Select an item")
-                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
         }
@@ -215,6 +224,7 @@ struct ContentView: View {
 struct HomeView: View {
     @ObservedObject var viewModel: ListViewModel
     @State private var showAlert = false
+    @State private var newListName = ""
     @State private var newListValue = ""
     
     var body: some View {
@@ -222,48 +232,78 @@ struct HomeView: View {
             Text("Home")
                 .font(.largeTitle)
             
-            if viewModel.lists.isEmpty {
+            if viewModel.namedLists.isEmpty {
                 Text("No lists available")
+            } else {
+                List {
+                    ForEach(0..<viewModel.namedLists.count, id: \.self) { index in
+                        NavigationLink(destination: ListView(viewModel: viewModel, listIndex: index)) {
+                            Text(viewModel.namedLists[index].name)
+                        }
+                    }
+                }
             }
             
             Button(action: {showAlert = true}) {
                 Text("Create New List")
                     .padding()
                     .background(Color.blue)
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.white)
                     .cornerRadius(8)
             }
             .alert("Create New List", isPresented: $showAlert) {
+                TextField("Enter list name", text: $newListName)
                 TextField("Enter initial value", text: $newListValue)
                 Button("Create", action: {
-                    if let value = Int(newListValue) {
-                        viewModel.createNewList(with: value)
+                    if let value = Int(newListValue), !newListName.isEmpty {
+                        viewModel.createNewList(with: value, name: newListName)
+                        newListName = ""
+                        newListValue = ""
                     }
                 })
                 Button("Cancel", role: .cancel, action: {})
             }
         }
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 struct ListView: View {
     @ObservedObject var viewModel: ListViewModel
+    var listIndex: Int
     
     var body: some View {
         VStack {
-            Text("Lists")
-                .font(.largeTitle)
-            
-            List {
-                ForEach(0..<viewModel.lists.count, id: \.self) {
-                    index in
-                    
-                    Text("List \(index + 1): \(viewModel.lists[index].front?.info ?? 0)")
+            if listIndex < viewModel.namedLists.count {
+                Text(viewModel.namedLists[listIndex].name)
+                    .font(.largeTitle)
+                
+                List {
+                    ForEach(getNodeValues(list: viewModel.namedLists[listIndex].list), id: \.self) { value in
+                        
+                        Text("\(value)")
+                    }
                 }
+            } else {
+                Text("List not available")
+                    .font(.largeTitle)
             }
         }
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    func getNodeValues(list: DoublyLinkedList) -> [Int] {
+        var values = [Int]()
+        var current = list.front
+        
+        while current != nil {
+            if let info = current?.info {
+                values.append(info)
+            }
+            current = current?.succ
+        }
+        
+        return values
     }
 }
 
