@@ -176,47 +176,10 @@ class ListViewModel: ObservableObject {
         guard index < namedLists.count else { return }
         namedLists[index].list.insertAtEnd(value)
     }
-}
-
-struct ContentView: View {
-    @StateObject private var viewModel = ListViewModel()
-    @State private var selection: String? = "Home"
     
-    var body: some View {
-        NavigationStack {
-            NavigationSplitView {
-                List(selection: $selection) {
-                    NavigationLink(value: "Home") {
-                        Label("Home", systemImage: "house")
-                    }
-                    if !viewModel.namedLists.isEmpty {
-                        NavigationLink(value: "List") {
-                            Label("List", systemImage: "star")
-                        }
-                    }
-                    NavigationLink(value: "Item") {
-                        Label("Item", systemImage: "bell")
-                    }
-                }
-                .listStyle(SidebarListStyle())
-                .navigationTitle("Sidebar")
-            } detail: {
-                if let selection = selection {
-                    if selection == "Home" {
-                        HomeView(viewModel: viewModel)
-                    } else if selection == "List" {
-                        if !viewModel.namedLists.isEmpty {
-                            ListView(viewModel: viewModel, listIndex: 0)
-                        }
-                    } else {
-                        Text(selection)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
-                } else {
-                    Text("Select an item")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-            }
+    func removeList(at index: Int) {
+        if index < namedLists.count {
+            namedLists.remove(at: index)
         }
     }
 }
@@ -224,8 +187,10 @@ struct ContentView: View {
 struct HomeView: View {
     @ObservedObject var viewModel: ListViewModel
     @State private var showAlert = false
+    @State private var showDeleteAlert = false
     @State private var newListName = ""
     @State private var newListValue = ""
+    @State private var indexToDelete: Int?
     
     var body: some View {
         VStack {
@@ -237,9 +202,21 @@ struct HomeView: View {
             } else {
                 List {
                     ForEach(0..<viewModel.namedLists.count, id: \.self) { index in
-                        NavigationLink(destination: ListView(viewModel: viewModel, listIndex: index)) {
-                            Text(viewModel.namedLists[index].name)
+                        HStack {
+                            NavigationLink(destination: ListView(viewModel: viewModel, listIndex: index)) {
+                                Text(viewModel.namedLists[index].name)
+                            }
+                            Spacer()
+                            Button(action: {
+                                indexToDelete = index
+                                showDeleteAlert = true
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.red)
+                            }
+                            .buttonStyle(BorderedButtonStyle())
                         }
+                        .padding(.vertical, 4)
                     }
                 }
             }
@@ -251,6 +228,7 @@ struct HomeView: View {
                     .foregroundColor(Color.white)
                     .cornerRadius(8)
             }
+            
             .alert("Create New List", isPresented: $showAlert) {
                 TextField("Enter list name", text: $newListName)
                 TextField("Enter initial value", text: $newListValue)
@@ -262,6 +240,18 @@ struct HomeView: View {
                     }
                 })
                 Button("Cancel", role: .cancel, action: {})
+            }
+            .alert(isPresented: $showDeleteAlert) {
+                Alert(
+                    title: Text("Confirm Delete"),
+                    message: Text("Are you sure you want to delete this list?"),
+                    primaryButton: .destructive(Text("Delete")) {
+                        if let index = indexToDelete {
+                            viewModel.removeList(at: index)
+                        }
+                    },
+                    secondaryButton: .cancel()
+                )
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -304,6 +294,49 @@ struct ListView: View {
         }
         
         return values
+    }
+}
+
+struct ContentView: View {
+    @StateObject private var viewModel = ListViewModel()
+    @State private var selection: String? = "Home"
+    
+    var body: some View {
+        NavigationStack {
+            NavigationSplitView {
+                List(selection: $selection) {
+                    NavigationLink(value: "Home") {
+                        Label("Home", systemImage: "house")
+                    }
+                    if !viewModel.namedLists.isEmpty {
+                        NavigationLink(value: "List") {
+                            Label("List", systemImage: "star")
+                        }
+                    }
+                    NavigationLink(value: "Item") {
+                        Label("Item", systemImage: "bell")
+                    }
+                }
+                .listStyle(SidebarListStyle())
+                .navigationTitle("Sidebar")
+            } detail: {
+                if let selection = selection {
+                    if selection == "Home" {
+                        HomeView(viewModel: viewModel)
+                    } else if selection == "List" {
+                        if !viewModel.namedLists.isEmpty {
+                            ListView(viewModel: viewModel, listIndex: viewModel.namedLists.firstIndex { $0.name == "List" } ?? 0)
+                        }
+                    } else {
+                        Text(selection)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                } else {
+                    Text("Select an item")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+        }
     }
 }
 
