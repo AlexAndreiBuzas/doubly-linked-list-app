@@ -25,17 +25,20 @@ class DoublyLinkedList: ObservableObject {
 
     func search(_ item: Int) -> Node? {
         var temp = front
+        
         while temp != nil {
             if temp!.info == item {
                 return temp
             }
             temp = temp!.succ
         }
+        
         return nil
     }
 
     func insertAtBeginning(_ value: Int) {
         let newNode = Node(value)
+        
         if front == nil {
             front = newNode
             end = newNode
@@ -44,12 +47,14 @@ class DoublyLinkedList: ObservableObject {
             front?.pred = newNode
             front = newNode
         }
+        
         count += 1
-        objectWillChange.send() // Trigger update
+        objectWillChange.send()
     }
 
     func insertAtEnd(_ value: Int) {
         let newNode = Node(value)
+        
         if front == nil {
             front = newNode
             end = newNode
@@ -58,8 +63,9 @@ class DoublyLinkedList: ObservableObject {
             end?.succ = newNode
             end = newNode
         }
+        
         count += 1
-        objectWillChange.send() // Trigger update
+        objectWillChange.send()
     }
 
     func insertAfter(_ value: Int, afterItem: Int) {
@@ -75,7 +81,7 @@ class DoublyLinkedList: ObservableObject {
         after.succ = newNode
 
         count += 1
-        objectWillChange.send() // Trigger update
+        objectWillChange.send()
     }
 
     func deleteFromBeginning() {
@@ -88,7 +94,7 @@ class DoublyLinkedList: ObservableObject {
         front?.pred = nil
 
         count -= 1
-        objectWillChange.send() // Trigger update
+        objectWillChange.send()
     }
 
     func deleteFromEnd() {
@@ -101,7 +107,7 @@ class DoublyLinkedList: ObservableObject {
         end?.succ = nil
 
         count -= 1
-        objectWillChange.send() // Trigger update
+        objectWillChange.send()
     }
 
     func deleteAfter(afterItem: Int) {
@@ -119,10 +125,10 @@ class DoublyLinkedList: ObservableObject {
         save.succ?.pred = after
 
         count -= 1
-        objectWillChange.send() // Trigger update
+        objectWillChange.send()
     }
 
-    func removeNode(_ value: Int) { // Renamed to removeNode to avoid conflict
+    func removeNode(_ value: Int) {
         guard let nodeToDelete = search(value) else { return }
 
         if nodeToDelete.pred != nil {
@@ -138,7 +144,7 @@ class DoublyLinkedList: ObservableObject {
         }
 
         count -= 1
-        objectWillChange.send() // Trigger update
+        objectWillChange.send()
     }
 
     func update(item: Int, newInfo: Int) {
@@ -148,11 +154,12 @@ class DoublyLinkedList: ObservableObject {
         }
 
         node.info = newInfo
-        objectWillChange.send() // Trigger update
+        objectWillChange.send()
     }
 
     func displayFromLeft() {
         var temp = front
+        
         while temp != nil {
             print(temp!.info, terminator: " ")
             temp = temp!.succ
@@ -161,6 +168,7 @@ class DoublyLinkedList: ObservableObject {
 
     func displayFromRight() {
         var temp = end
+        
         while temp != nil {
             print(temp!.info, terminator: " ")
             temp = temp!.pred
@@ -169,6 +177,7 @@ class DoublyLinkedList: ObservableObject {
 
     func sort() {
         var tempI = front
+        
         while tempI != nil && tempI!.succ != nil {
             var tempJ = tempI!.succ
             while tempJ != nil {
@@ -181,7 +190,8 @@ class DoublyLinkedList: ObservableObject {
             }
             tempI = tempI!.succ
         }
-        objectWillChange.send() // Trigger update
+        
+        objectWillChange.send()
     }
 }
 
@@ -257,11 +267,11 @@ struct HomeView: View {
                             
                             Spacer()
                             
-                            NavigationLink(destination: EditListView(viewModel: viewModel, listIndex: index)) {
+                            /*NavigationLink(destination: EditListView(viewModel: viewModel, listIndex: index)) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.blue)
                             }
-                            .buttonStyle(BorderedButtonStyle())
+                            .buttonStyle(BorderedButtonStyle())*/
                             
                             Button(action: {
                                 indexToDelete = index
@@ -296,6 +306,8 @@ struct HomeView: View {
                 })
                 Button("Cancel", role: .cancel, action: {})
             }
+            .dialogIcon(Image(systemName: "exclamationmark.triangle.fill")
+                .symbolRenderingMode(.multicolor))
             .alert(isPresented: $showDeleteAlert) {
                 Alert(
                     title: Text("Confirm Delete"),
@@ -468,7 +480,7 @@ struct EditListView: View {
     }
 }
 
-struct ItemView: View {
+struct DisplayListInOrderView: View {
     @ObservedObject var viewModel: ListViewModel
     @State private var selectedListIndex: Int
 
@@ -533,11 +545,11 @@ struct ContentView: View {
                         Label("Home", systemImage: "house")
                     }
                     if !viewModel.namedLists.isEmpty {
-                        NavigationLink(value: "List") {
-                            Label("List", systemImage: "star")
+                        NavigationLink(value: "Edit List") {
+                            Label("Edit List", systemImage: "pencil")
                         }
-                        NavigationLink(value: "Item") {
-                            Label("Item", systemImage: "bell")
+                        NavigationLink(value: "View List In Order") {
+                            Label("View List In Order", systemImage: "list.number")
                         }
                     }
                 }
@@ -547,13 +559,13 @@ struct ContentView: View {
                 if let selection = selection {
                     if selection == "Home" {
                         HomeView(viewModel: viewModel)
-                    } else if selection == "List" {
+                    } else if selection == "Edit List" {
                         if !viewModel.namedLists.isEmpty {
-                            EditListView(viewModel: viewModel, listIndex: viewModel.namedLists.firstIndex { $0.name == "List" } ?? 0)
+                            EditListView(viewModel: viewModel, listIndex: viewModel.namedLists.firstIndex { $0.name == "Edit List" } ?? 0)
                         }
-                    } else if selection == "Item" {
+                    } else if selection == "View List In Order" {
                         if !viewModel.namedLists.isEmpty {
-                            ItemView(viewModel: viewModel, listIndex: viewModel.namedLists.firstIndex { $0.name == "Item" } ?? 0)
+                            DisplayListInOrderView(viewModel: viewModel, listIndex: viewModel.namedLists.firstIndex { $0.name == "View List In Order" } ?? 0)
                         }
                     } else {
                         Text(selection)
