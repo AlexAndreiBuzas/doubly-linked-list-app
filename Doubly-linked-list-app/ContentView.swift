@@ -22,7 +22,7 @@ class DoublyLinkedList: ObservableObject {
     @Published var count: Int = 0
     @Published var front: Node?
     @Published var end: Node?
-        
+
     func search(_ item: Int) -> Node? {
         var temp = front
         while temp != nil {
@@ -33,7 +33,7 @@ class DoublyLinkedList: ObservableObject {
         }
         return nil
     }
-    
+
     func insertAtBeginning(_ value: Int) {
         let newNode = Node(value)
         if front == nil {
@@ -45,8 +45,9 @@ class DoublyLinkedList: ObservableObject {
             front = newNode
         }
         count += 1
+        objectWillChange.send() // Trigger update
     }
-    
+
     func insertAtEnd(_ value: Int) {
         let newNode = Node(value)
         if front == nil {
@@ -58,33 +59,36 @@ class DoublyLinkedList: ObservableObject {
             end = newNode
         }
         count += 1
+        objectWillChange.send() // Trigger update
     }
-    
+
     func insertAfter(_ value: Int, afterItem: Int) {
         guard let after = search(afterItem) else {
             print("\nError - element does not exist (insertAfter)")
             return
         }
-        
+
         let newNode = Node(value)
         newNode.pred = after
         newNode.succ = after.succ
         after.succ?.pred = newNode
         after.succ = newNode
-        
+
         count += 1
+        objectWillChange.send() // Trigger update
     }
-    
+
     func deleteFromBeginning() {
         guard front != nil else {
             print("\nError - empty list (deleteFromBeginning)")
             return
         }
-        
+
         front = front?.succ
         front?.pred = nil
-        
+
         count -= 1
+        objectWillChange.send() // Trigger update
     }
 
     func deleteFromEnd() {
@@ -92,39 +96,61 @@ class DoublyLinkedList: ObservableObject {
             print("\nError - empty list (deleteFromEnd)")
             return
         }
-        
+
         end = end?.pred
         end?.succ = nil
-        
+
         count -= 1
+        objectWillChange.send() // Trigger update
     }
-    
+
     func deleteAfter(afterItem: Int) {
         guard let after = search(afterItem) else {
             print("\nError - element does not exist (deleteAfter)")
             return
         }
-        
+
         guard let save = after.succ else {
             print("\nError - element after does not exist (deleteAfter)")
             return
         }
-        
+
         after.succ = save.succ
         save.succ?.pred = after
-        
+
         count -= 1
+        objectWillChange.send() // Trigger update
     }
-    
+
+    func removeNode(_ value: Int) { // Renamed to removeNode to avoid conflict
+        guard let nodeToDelete = search(value) else { return }
+
+        if nodeToDelete.pred != nil {
+            nodeToDelete.pred?.succ = nodeToDelete.succ
+        } else {
+            front = nodeToDelete.succ
+        }
+
+        if nodeToDelete.succ != nil {
+            nodeToDelete.succ?.pred = nodeToDelete.pred
+        } else {
+            end = nodeToDelete.pred
+        }
+
+        count -= 1
+        objectWillChange.send() // Trigger update
+    }
+
     func update(item: Int, newInfo: Int) {
         guard let node = search(item) else {
             print("\nError - element does not exist (update)")
             return
         }
-        
+
         node.info = newInfo
+        objectWillChange.send() // Trigger update
     }
-    
+
     func displayFromLeft() {
         var temp = front
         while temp != nil {
@@ -132,7 +158,7 @@ class DoublyLinkedList: ObservableObject {
             temp = temp!.succ
         }
     }
-    
+
     func displayFromRight() {
         var temp = end
         while temp != nil {
@@ -140,7 +166,7 @@ class DoublyLinkedList: ObservableObject {
             temp = temp!.pred
         }
     }
-    
+
     func sort() {
         var tempI = front
         while tempI != nil && tempI!.succ != nil {
@@ -155,6 +181,27 @@ class DoublyLinkedList: ObservableObject {
             }
             tempI = tempI!.succ
         }
+        objectWillChange.send() // Trigger update
+    }
+}
+
+extension DoublyLinkedList {
+    func deleteNode(_ value: Int) {
+        guard let nodeToDelete = search(value) else { return }
+        
+        if nodeToDelete.pred != nil {
+            nodeToDelete.pred?.succ = nodeToDelete.succ
+        } else {
+            front = nodeToDelete.succ
+        }
+        
+        if nodeToDelete.succ != nil {
+            nodeToDelete.succ?.pred = nodeToDelete.pred
+        } else {
+            end = nodeToDelete.pred
+        }
+        
+        count -= 1
     }
 }
 
@@ -197,17 +244,16 @@ struct HomeView: View {
         VStack {
             Text("Home")
                 .font(.largeTitle)
+                .padding(.top)
             
             if viewModel.namedLists.isEmpty {
                 Text("No lists available")
+                    .opacity(0.5)
             } else {
                 List {
                     ForEach(0..<viewModel.namedLists.count, id: \.self) { index in
                         HStack {
                             Text(viewModel.namedLists[index].name)
-                            /*NavigationLink(destination: EditListView(viewModel: viewModel, listIndex: index)) {
-                                Text(viewModel.namedLists[index].name)
-                            }*/
                             
                             Spacer()
                             
@@ -234,11 +280,9 @@ struct HomeView: View {
             Button(action: {showAlert = true}) {
                 Text("Create New List")
                     .padding()
-                    //.foregroundStyle(Color.white)
-                    //.background(Color.blue)
                     .cornerRadius(8)
-                    
             }
+            .padding(.bottom, 8)
             
             .alert("Create New List", isPresented: $showAlert) {
                 TextField("Enter list name", text: $newListName)
@@ -271,36 +315,83 @@ struct HomeView: View {
 
 struct EditListView: View {
     @ObservedObject var viewModel: ListViewModel
-    var listIndex: Int
+    @State private var selectedListIndex: Int
     @State private var editValue = ""
     @State private var selectedValue: Int?
-    
+
+    init(viewModel: ListViewModel, listIndex: Int) {
+        self.viewModel = viewModel
+        _selectedListIndex = State(initialValue: listIndex)
+    }
+
     var body: some View {
         VStack {
-            Text(viewModel.namedLists[listIndex].name)
-                .font(.largeTitle)
-                .padding()
+            HStack {
+                Menu {
+                    ForEach(0..<viewModel.namedLists.count, id: \.self) { index in
+                        Button(action: {
+                            selectedListIndex = index
+                        }) {
+                            Text(viewModel.namedLists[index].name)
+                        }
+                    }
+                } label: {
+                    Text(viewModel.namedLists[selectedListIndex].name)
+                        .font(.largeTitle)
+                }
+                .menuStyle(BorderlessButtonMenuStyle())
+            }
+            .padding()
+
+            Spacer()
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(getNodeValues(list: viewModel.namedLists[listIndex].list), id: \.self) { value in
-                        Text("\(value)")
-                            .padding()
-                            .background(selectedValue == value ? Color.blue : Color.gray)
-                            //.foregroundStyle(.white)
-                            .clipShape(Capsule())
-                            .onTapGesture {
-                                selectedValue = value
+                    ForEach(getNodeValues(list: viewModel.namedLists[selectedListIndex].list), id: \.self) { value in
+                        HStack {
+                            if value != getNodeValues(list: viewModel.namedLists[selectedListIndex].list).first {
+                                Image(systemName: "arrow.left")
+                                    .foregroundColor(selectedValue == value ? .blue : .gray.opacity(0.8))
                             }
+                            Text("\(value)")
+                                .frame(width: 50)
+                                .background(Color.clear)
+                                .padding(5)
+                                .overlay(
+                                    Group {
+                                        if selectedValue == value {
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .stroke(Color.blue, lineWidth: 2)
+                                                .background(RoundedRectangle(cornerRadius: 8).fill(Color.blue.opacity(0.2)))
+                                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        } else {
+                                            VStack {
+                                                Spacer()
+                                                Rectangle()
+                                                    .fill(Color.gray)
+                                                    .frame(height: 1)
+                                                    .opacity(0.5)
+                                            }
+                                        }
+                                    }
+                                )
+                                .onTapGesture {
+                                    selectedValue = value
+                                }
+                            if value != getNodeValues(list: viewModel.namedLists[selectedListIndex].list).last {
+                                Image(systemName: "arrow.right")
+                                    .foregroundColor(selectedValue == value ? .blue : .gray.opacity(0.8))
+                            }
+                        }
                     }
                 }
             }
             .padding()
-            
+
             Spacer()
-            
+
             VStack {
-                TextField("Enter value to add", text: $editValue)
+                TextField("Enter value", text: $editValue)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
@@ -308,21 +399,21 @@ struct EditListView: View {
                     Menu("Insert") {
                         Button("At Beginning", action: {
                             if let value = Int(editValue) {
-                                viewModel.namedLists[listIndex].list.insertAtBeginning(value)
+                                viewModel.namedLists[selectedListIndex].list.insertAtBeginning(value)
                                 editValue = ""
                             }
                         })
                         
                         Button("At End", action: {
                             if let value = Int(editValue) {
-                                viewModel.namedLists[listIndex].list.insertAtEnd(value)
+                                viewModel.namedLists[selectedListIndex].list.insertAtEnd(value)
                                 editValue = ""
                             }
                         })
                         
                         Button("After Value", action: {
                             if let value = Int(editValue), let target = selectedValue {
-                                viewModel.namedLists[listIndex].list.insertAfter(value, afterItem: target)
+                                viewModel.namedLists[selectedListIndex].list.insertAfter(value, afterItem: target)
                                 editValue = ""
                             }
                         })
@@ -331,28 +422,37 @@ struct EditListView: View {
                     
                     Menu("Delete") {
                         Button("From Beginning", action: {
-                            viewModel.namedLists[listIndex].list.deleteFromBeginning()
+                            viewModel.namedLists[selectedListIndex].list.deleteFromBeginning()
                         })
                         
                         Button("From End", action: {
-                            viewModel.namedLists[listIndex].list.deleteFromEnd()
+                            viewModel.namedLists[selectedListIndex].list.deleteFromEnd()
                         })
                         
-                        Button("After Value", action: {
+                        Button("Delete Selected", action: {
                             if let target = selectedValue {
-                                viewModel.namedLists[listIndex].list.deleteAfter(afterItem: target)
+                                viewModel.namedLists[selectedListIndex].list.removeNode(target)
+                                selectedValue = nil
                             }
-                            
                         })
                     }
-                    .padding(.horizontal)
-                    //.padding(.bottom)
+                    .padding()
+                    
+                    Menu("Update") {
+                        Button("Update Value", action: {
+                            if let newValue = Int(editValue), let target = selectedValue {
+                                viewModel.namedLists[selectedListIndex].list.update(item: target, newInfo: newValue)
+                                editValue = ""
+                            }
+                        })
+                    }
+                    .padding()
                 }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
     func getNodeValues(list: DoublyLinkedList) -> [Int] {
         var values = [Int]()
         var current = list.front
@@ -368,10 +468,63 @@ struct EditListView: View {
     }
 }
 
+struct ItemView: View {
+    @ObservedObject var viewModel: ListViewModel
+    @State private var selectedListIndex: Int
+
+    init(viewModel: ListViewModel, listIndex: Int) {
+        self.viewModel = viewModel
+        _selectedListIndex = State(initialValue: listIndex)
+    }
+
+    var body: some View {
+        VStack {
+            HStack {
+                Menu {
+                    ForEach(0..<viewModel.namedLists.count, id: \.self) { index in
+                        Button(action: {
+                            selectedListIndex = index
+                        }) {
+                            Text(viewModel.namedLists[index].name)
+                        }
+                    }
+                } label: {
+                    Text(viewModel.namedLists[selectedListIndex].name)
+                        .font(.largeTitle)
+                }
+                .menuStyle(BorderlessButtonMenuStyle())
+            }
+            .padding()
+
+            List {
+                ForEach(getSortedNodeValues(list: viewModel.namedLists[selectedListIndex].list), id: \.self) { value in
+                    Text("\(value)")
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    func getSortedNodeValues(list: DoublyLinkedList) -> [Int] {
+        var values = [Int]()
+        var current = list.front
+        
+        while current != nil {
+            if let info = current?.info {
+                values.append(info)
+            }
+            current = current?.succ
+        }
+        
+        values.sort()
+        return values
+    }
+}
+
 struct ContentView: View {
     @StateObject private var viewModel = ListViewModel()
     @State private var selection: String? = "Home"
-    
+
     var body: some View {
         NavigationStack {
             NavigationSplitView {
@@ -383,9 +536,9 @@ struct ContentView: View {
                         NavigationLink(value: "List") {
                             Label("List", systemImage: "star")
                         }
-                    }
-                    NavigationLink(value: "Item") {
-                        Label("Item", systemImage: "bell")
+                        NavigationLink(value: "Item") {
+                            Label("Item", systemImage: "bell")
+                        }
                     }
                 }
                 .listStyle(SidebarListStyle())
@@ -397,6 +550,10 @@ struct ContentView: View {
                     } else if selection == "List" {
                         if !viewModel.namedLists.isEmpty {
                             EditListView(viewModel: viewModel, listIndex: viewModel.namedLists.firstIndex { $0.name == "List" } ?? 0)
+                        }
+                    } else if selection == "Item" {
+                        if !viewModel.namedLists.isEmpty {
+                            ItemView(viewModel: viewModel, listIndex: viewModel.namedLists.firstIndex { $0.name == "Item" } ?? 0)
                         }
                     } else {
                         Text(selection)
