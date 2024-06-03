@@ -191,6 +191,7 @@ struct HomeView: View {
     @State private var newListName = ""
     @State private var newListValue = ""
     @State private var indexToDelete: Int?
+    @State private var indexToEdit: Int?
     
     var body: some View {
         VStack {
@@ -203,10 +204,19 @@ struct HomeView: View {
                 List {
                     ForEach(0..<viewModel.namedLists.count, id: \.self) { index in
                         HStack {
-                            NavigationLink(destination: ListView(viewModel: viewModel, listIndex: index)) {
+                            Text(viewModel.namedLists[index].name)
+                            /*NavigationLink(destination: EditListView(viewModel: viewModel, listIndex: index)) {
                                 Text(viewModel.namedLists[index].name)
-                            }
+                            }*/
+                            
                             Spacer()
+                            
+                            NavigationLink(destination: EditListView(viewModel: viewModel, listIndex: index)) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.blue)
+                            }
+                            .buttonStyle(BorderedButtonStyle())
+                            
                             Button(action: {
                                 indexToDelete = index
                                 showDeleteAlert = true
@@ -224,9 +234,10 @@ struct HomeView: View {
             Button(action: {showAlert = true}) {
                 Text("Create New List")
                     .padding()
-                    .background(Color.blue)
-                    .foregroundColor(Color.white)
+                    //.foregroundStyle(Color.white)
+                    //.background(Color.blue)
                     .cornerRadius(8)
+                    
             }
             
             .alert("Create New List", isPresented: $showAlert) {
@@ -258,25 +269,85 @@ struct HomeView: View {
     }
 }
 
-struct ListView: View {
+struct EditListView: View {
     @ObservedObject var viewModel: ListViewModel
     var listIndex: Int
+    @State private var editValue = ""
+    @State private var selectedValue: Int?
     
     var body: some View {
         VStack {
-            if listIndex < viewModel.namedLists.count {
-                Text(viewModel.namedLists[listIndex].name)
-                    .font(.largeTitle)
-                
-                List {
+            Text(viewModel.namedLists[listIndex].name)
+                .font(.largeTitle)
+                .padding()
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
                     ForEach(getNodeValues(list: viewModel.namedLists[listIndex].list), id: \.self) { value in
-                        
                         Text("\(value)")
+                            .padding()
+                            .background(selectedValue == value ? Color.blue : Color.gray)
+                            //.foregroundStyle(.white)
+                            .clipShape(Capsule())
+                            .onTapGesture {
+                                selectedValue = value
+                            }
                     }
                 }
-            } else {
-                Text("List not available")
-                    .font(.largeTitle)
+            }
+            .padding()
+            
+            Spacer()
+            
+            VStack {
+                TextField("Enter value to add", text: $editValue)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                HStack {
+                    Menu("Insert") {
+                        Button("At Beginning", action: {
+                            if let value = Int(editValue) {
+                                viewModel.namedLists[listIndex].list.insertAtBeginning(value)
+                                editValue = ""
+                            }
+                        })
+                        
+                        Button("At End", action: {
+                            if let value = Int(editValue) {
+                                viewModel.namedLists[listIndex].list.insertAtEnd(value)
+                                editValue = ""
+                            }
+                        })
+                        
+                        Button("After Value", action: {
+                            if let value = Int(editValue), let target = selectedValue {
+                                viewModel.namedLists[listIndex].list.insertAfter(value, afterItem: target)
+                                editValue = ""
+                            }
+                        })
+                    }
+                    .padding()
+                    
+                    Menu("Delete") {
+                        Button("From Beginning", action: {
+                            viewModel.namedLists[listIndex].list.deleteFromBeginning()
+                        })
+                        
+                        Button("From End", action: {
+                            viewModel.namedLists[listIndex].list.deleteFromEnd()
+                        })
+                        
+                        Button("After Value", action: {
+                            if let target = selectedValue {
+                                viewModel.namedLists[listIndex].list.deleteAfter(afterItem: target)
+                            }
+                            
+                        })
+                    }
+                    .padding(.horizontal)
+                    //.padding(.bottom)
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -325,7 +396,7 @@ struct ContentView: View {
                         HomeView(viewModel: viewModel)
                     } else if selection == "List" {
                         if !viewModel.namedLists.isEmpty {
-                            ListView(viewModel: viewModel, listIndex: viewModel.namedLists.firstIndex { $0.name == "List" } ?? 0)
+                            EditListView(viewModel: viewModel, listIndex: viewModel.namedLists.firstIndex { $0.name == "List" } ?? 0)
                         }
                     } else {
                         Text(selection)
